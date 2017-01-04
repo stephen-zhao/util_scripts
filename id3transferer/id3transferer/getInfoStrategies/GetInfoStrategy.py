@@ -1,23 +1,25 @@
-from .. import exceptions
+from ..exceptions import *
 
 
 class GetInfoStrategy:
     def __init__(self):
-        raise exceptions.AbstractInstantiationException("GetInfoStrategy")
-
-    def getNameAbbr(self):
-        raise exceptions.AbstractMethodCallException("getNameAbbr")
+        raise AbstractInstantiationException("GetInfoStrategy")
 
     def getInfoImpl(self, file):
-        raise exceptions.AbstractMethodCallException("getInfoImpl")
+        raise AbstractMethodCallException("getInfoImpl")
+
+    @classmethod
+    def getStratNameAbbr(cls):
+        raise AbstractMethodCallException("getStratNameAbbr")
 
     @classmethod
     def getStratListAbbr(cls):
+        print(vars())
         return [sub.getNameAbbr()
-                for sub in vars()["GetInfoStrategy"].__subclasses__()]
+                for sub in GetInfoStrategy.__subclasses__()]
 
     @classmethod
     def createStrategy(cls, abbr):
-        for sub in vars()["GetInfoStrategy"].__subclasses__():
+        for sub in GetInfoStrategy.__subclasses__():
             if sub.getNameAbbr() == abbr:
                 return sub()
